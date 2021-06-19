@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<h1>Stateless + Blazor UI</h1>
+
+<button class="btn btn-warning" @onclick="@(() => shoppingCart = new())">Reset Shopping Cart</button>
+
+<h4>Cart State: @shoppingCart.State (@shoppingCart.ItemCount items)</h4>
+
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.AddItem))" @onclick="@(shoppingCart.AddItem)">Add Item</button>
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.RemoveItem))" @onclick="@(shoppingCart.RemoveItem)">Remove Item</button>
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.SaveCart))" @onclick="@(shoppingCart.SaveCart)">Save Cart</button>
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.EditCart))" @onclick="@(shoppingCart.EditCart)">Edit Saved Cart</button>
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.DeleteCart))" @onclick="@(shoppingCart.DeleteCart)">Delete Cart</button>
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.PurchaseCart))" @onclick="@(shoppingCart.PurchaseCart)">Purchase Cart</button>
+<button class="btn btn-primary" disabled="@(!shoppingCart.CanFire(ShoppingCartTrigger.AddNote))" @onclick="@(shoppingCart.AddNote)">Add Note</button>
+
+<div>
+    <b>Log</b>
+    <ul class="list-group">
+        @foreach (var log in shoppingCart.Log)
+        {
+            <li class="list-group-item">
+                @log
+            </li>
+        }
+    </ul>
+</div>
+
+@code{
+    private ShoppingCart shoppingCart;
+
+    protected override void OnInitialized()
+    {
+        shoppingCart = new();
+        base.OnInitialized();
+    }
+}
